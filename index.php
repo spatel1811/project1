@@ -84,14 +84,18 @@ class uploadform extends page
     }
 
     public  function post() {
+
+        //path for file to be upload
      $target_dir = "/afs/cad/u/s/j/sjp77/public_html/project1/uploads/";
                     
-
+     
      $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
      
+     //using move function to upload file to a new loaction
      if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file))
          {
             echo $target_file;
+            //using header for sending data to particular loaction
             header('Location:https://web.njit.edu/~sjp77/project1/index.php?page=htmlTable&filename='.$target_file);
           }
     else
@@ -102,23 +106,21 @@ class uploadform extends page
 }
 
 
-
+//class for diaplaying table
 class htmlTable extends page {
 
     public function get()
  
       {
 
-        //echo "HTML TABLE";
+        
         //opens the file specified
         
-
-
-
 $my= fopen($_GET['filename'],"r") or die("unable to open");
 
-echo "<html><body><table border=3; background-color: #0f0>\n\n";
+echo "<html><body><table border=3>\n\n";
 //echo "<table border="3">";
+//fgetcsv to convert the csv file into array and display it
 while (($m = fgetcsv($my)) !== false) 
   {
         
@@ -133,9 +135,6 @@ fclose($my);
 echo "\n</table></body></html>";
 
       }
-
-
-    
 
 
 }
